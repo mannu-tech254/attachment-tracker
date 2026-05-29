@@ -37,3 +37,15 @@ class StudentProfileForm(forms.ModelForm):
         model = StudentProfile
         fields = ['reg_number', 'course', 'year_of_study', 'company_name',
                   'company_location', 'start_date', 'end_date', 'assigned_lecturer']
+        from django.contrib.auth.forms import UserCreationForm
+
+class RegisterForm(UserCreationForm):
+    first_name = forms.CharField(max_length=50)
+    last_name = forms.CharField(max_length=50)
+    email = forms.EmailField()
+    role = forms.ChoiceField(choices=[('student', 'Student'), ('lecturer', 'Lecturer')])
+    phone = forms.CharField(max_length=15, required=False)
+
+    class Meta:
+        model = User
+        fields = ['username', 'first_name', 'last_name', 'email', 'phone', 'role', 'password1', 'password2']

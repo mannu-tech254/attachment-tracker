@@ -1,0 +1,46 @@
+{% extends 'tracker/base.html' %}
+{% block content %}
+<h1>Student Dashboard</h1>
+
+<div class="card">
+    <h2>My Attachment Details</h2>
+    <table>
+        <tr><th>Registration No.</th><td>{{ profile.reg_number }}</td></tr>
+        <tr><th>Course</th><td>{{ profile.course }}</td></tr>
+        <tr><th>Company</th><td>{{ profile.company_name }}</td></tr>
+        <tr><th>Location</th><td>{{ profile.company_location }}</td></tr>
+        <tr><th>Start Date</th><td>{{ profile.start_date }}</td></tr>
+        <tr><th>End Date</th><td>{{ profile.end_date }}</td></tr>
+        <tr><th>Supervisor</th><td>{{ profile.assigned_lecturer }}</td></tr>
+    </table>
+</div>
+
+<div class="card">
+    <h2>My Reports</h2>
+    <a href="{% url 'submit_report' %}" class="btn btn-success">+ Submit New Report</a>
+    <br><br>
+    {% if reports %}
+    <table>
+        <tr>
+            <th>Week</th><th>Hours Worked</th><th>Date Submitted</th><th>Feedback</th>
+        </tr>
+        {% for report in reports %}
+        <tr>
+            <td>Week {{ report.week_number }}</td>
+            <td>{{ report.hours_worked }} hrs</td>
+            <td>{{ report.date_submitted|date:"d M Y" }}</td>
+            <td>
+                {% if report.reportfeedback %}
+                    ✅ {{ report.reportfeedback.grade }}
+                {% else %}
+                    ⏳ Pending
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+    {% else %}
+        <p>No reports submitted yet.</p>
+    {% endif %}
+</div>
+{% endblock %}

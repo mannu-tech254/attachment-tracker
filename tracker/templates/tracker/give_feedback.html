@@ -1,0 +1,16 @@
+{% extends 'tracker/base.html' %}
+{% block content %}
+<div class="card">
+    <h2>💬 Give Feedback — Week {{ report.week_number }}</h2>
+    <p><strong>Tasks:</strong> {{ report.tasks_done }}</p>
+    <hr style="margin: 15px 0;">
+    <form method="post">
+        {% csrf_token %}
+        {% for field in form %}
+            <label>{{ field.label }}</label>
+            {{ field }}
+        {% endfor %}
+        <button type="submit" class="btn">Submit Feedback</button>
+    </form>
+</div>
+{% endblock %}

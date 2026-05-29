@@ -1,0 +1,20 @@
+{% extends 'tracker/base.html' %}
+{% block content %}
+<div class="card" style="max-width: 400px; margin: 60px auto;">
+    <h2>🔐 Login</h2>
+    <form method="post">
+        {% csrf_token %}
+        {% for field in form %}
+            <label>{{ field.label }}</label>
+            {{ field }}
+            {% if field.errors %}
+                <small style="color:red;">{{ field.errors }}</small>
+            {% endif %}
+        {% endfor %}
+        <button type="submit" class="btn" style="width:100%;">Login</button>
+        {% if error %}
+    <p style="color:red; margin-bottom:15px;">⚠️ {{ error }}</p>
+{% endif %}
+    </form>
+</div>
+{% endblock %}

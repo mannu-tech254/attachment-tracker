@@ -1,0 +1,21 @@
+{% extends 'tracker/base.html' %}
+{% block content %}
+<h1>{{ student.user.get_full_name }}'s Reports</h1>
+<a href="{% url 'lecturer_dashboard' %}" class="btn" style="margin-bottom:20px; display:inline-block;">← Back</a>
+
+{% for report in reports %}
+<div class="card">
+    <h2>Week {{ report.week_number }} — {{ report.date_submitted|date:"d M Y" }}</h2>
+    <p><strong>Tasks Done:</strong><br>{{ report.tasks_done }}</p>
+    <p><strong>Challenges:</strong><br>{{ report.challenges }}</p>
+    <p><strong>Lessons Learned:</strong><br>{{ report.lessons_learned }}</p>
+    <p><strong>Hours Worked:</strong> {{ report.hours_worked }}</p>
+    <hr style="margin: 15px 0;">
+    {% if report.reportfeedback %}
+        <p><strong>✅ Feedback Given:</strong> {{ report.reportfeedback.grade }} — {{ report.reportfeedback.comment }}</p>
+    {% else %}
+        <a href="{% url 'give_feedback' report.id %}" class="btn btn-success">Give Feedback</a>
+    {% endif %}
+</div>
+{% endfor %}
+{% endblock %}

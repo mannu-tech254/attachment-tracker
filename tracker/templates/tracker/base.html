@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Attachment Tracker</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: Arial, sans-serif; background: #f4f6f9; color: #333; }
+        nav {
+            background: #1a73e8; color: white; padding: 15px 30px;
+            display: flex; justify-content: space-between; align-items: center;
+        }
+        nav a { color: white; text-decoration: none; margin-left: 15px; }
+        nav a:hover { text-decoration: underline; }
+        .container { max-width: 900px; margin: 40px auto; padding: 0 20px; }
+        .card {
+            background: white; border-radius: 8px;
+            padding: 30px; margin-bottom: 20px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+        }
+        h1, h2 { margin-bottom: 20px; color: #1a73e8; }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { padding: 12px; text-align: left; border-bottom: 1px solid #eee; }
+        th { background: #f0f4ff; }
+        .btn {
+            display: inline-block; padding: 10px 20px; background: #1a73e8;
+            color: white; border: none; border-radius: 5px;
+            cursor: pointer; text-decoration: none; font-size: 14px;
+        }
+        .btn:hover { background: #1558b0; }
+        .btn-danger { background: #e53935; }
+        .btn-success { background: #43a047; }
+        input, textarea, select {
+            width: 100%; padding: 10px; margin: 8px 0 16px 0;
+            border: 1px solid #ccc; border-radius: 5px; font-size: 14px;
+        }
+        label { font-weight: bold; font-size: 14px; }
+        .alert { padding: 12px; border-radius: 5px; margin-bottom: 20px; background: #fff3cd; }
+    </style>
+</head>
+<body>
+    <nav>
+        <strong>📋 Attachment Tracker</strong>
+        <div>
+            {% if user.is_authenticated %}
+                <span>Hello, {{ user.get_full_name|default:user.username }}</span>
+                <a href="{% url 'logout' %}">Logout</a>
+            {% endif %}
+        </div>
+    </nav>
+    <div class="container">
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+        {% block content %}{% endblock %}
+    </div>
+</body>
+</html>

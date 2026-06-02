@@ -1,6 +1,6 @@
 from django import forms
 from .models import User, WeeklyReport, ReportFeedback, StudentProfile
-from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 
 
 # Login Form

@@ -2,7 +2,7 @@ from .forms import LoginForm, WeeklyReportForm, FeedbackForm, RegisterForm
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-from .forms import LoginForm, WeeklyReportForm, FeedbackForm
+from .forms import LoginForm, WeeklyReportForm, FeedbackForm, RegisterForm
 from .models import StudentProfile, WeeklyReport, ReportFeedback, User
 
 
@@ -33,6 +33,36 @@ def login_view(request):
 def logout_view(request):
     logout(request)
     return redirect('login')
+
+def register_view(request):
+    form = RegisterForm(request.POST or None)
+    if request.method == 'POST' and form.is_valid():
+        user = form.save(commit=False)
+        user.role = form.cleaned_data['role']
+        user.save()
+       
+        if user.role == 'student':
+            login(request, user)
+            return redirect('complete_profile')
+        else:
+            login(request, user)
+            return redirect('lecturer_dashboard')
+    return render(request, 'tracker/register.html', {'form': form})
+
+
+@login_required
+def complete_profile(request):
+    # Check if profile already exists
+    if StudentProfile.objects.filter(user=request.user).exists():
+        return redirect('student_dashboard')
+    
+    form = StudentProfileForm(request.POST or None)
+    if request.method == 'POST' and form.is_valid():
+        profile = form.save(commit=False)
+        profile.user = request.user
+        profile.save()
+        return redirect('student_dashboard')
+    return render(request, 'tracker/complete_profile.html', {'form': form})
 
 
 # ─── STUDENT VIEWS ────────────────────────────────────────

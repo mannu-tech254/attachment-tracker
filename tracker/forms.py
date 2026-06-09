@@ -31,12 +31,18 @@ class FeedbackForm(forms.ModelForm):
         }
 
 
-# Student Profile Form (for admin)
 class StudentProfileForm(forms.ModelForm):
     class Meta:
         model = StudentProfile
         fields = ['reg_number', 'course', 'year_of_study', 'company_name',
                   'company_location', 'start_date', 'end_date', 'assigned_lecturer']
+    
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        # Only show lecturers in the dropdown
+        self.fields['assigned_lecturer'].queryset = User.objects.filter(role='lecturer')
+        self.fields['assigned_lecturer'].required = False
+        self.fields['assigned_lecturer'].empty_label = "Not assigned yet"
         from django.contrib.auth.forms import UserCreationForm
 
 class RegisterForm(UserCreationForm):

@@ -49,10 +49,8 @@ def register_view(request):
             return redirect('lecturer_dashboard')
     return render(request, 'tracker/register.html', {'form': form})
 
-
 @login_required
 def complete_profile(request):
-    # Check if profile already exists
     if StudentProfile.objects.filter(user=request.user).exists():
         return redirect('student_dashboard')
     
@@ -63,7 +61,6 @@ def complete_profile(request):
         profile.save()
         return redirect('student_dashboard')
     return render(request, 'tracker/complete_profile.html', {'form': form})
-
 
 # ─── STUDENT VIEWS ────────────────────────────────────────
 

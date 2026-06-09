@@ -1,10 +1,8 @@
-from .forms import LoginForm, WeeklyReportForm, FeedbackForm, RegisterForm, StudentProfileForm
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-from .forms import LoginForm, WeeklyReportForm, FeedbackForm, RegisterForm
+from .forms import LoginForm, WeeklyReportForm, FeedbackForm, RegisterForm, StudentProfileForm
 from .models import StudentProfile, WeeklyReport, ReportFeedback, User
-
 
 # ─── AUTH VIEWS ───────────────────────────────────────────
 
